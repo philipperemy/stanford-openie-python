@@ -32,6 +32,7 @@ Version:    2016-07-08
 from __future__ import print_function
 
 import os
+import pickle
 from argparse import ArgumentParser
 from platform import system
 from subprocess import Popen
@@ -40,12 +41,14 @@ from sys import stderr
 
 IS_WINDOWS = True if system() == 'Windows' else False
 JAVA_BIN_PATH = 'java.exe' if IS_WINDOWS else 'java'
+DOT_BIN_PATH = 'dot.exe' if IS_WINDOWS else 'dot'
 
 
 def arg_parse():
     arg_p = ArgumentParser('Stanford IE Python Wrapper')
     arg_p.add_argument('-f', '--filename', type=str, default=None)
     arg_p.add_argument('-v', '--verbose', action='store_true')
+    arg_p.add_argument('-g', '--generate_graph', action='store_true')
     return arg_p
 
 
@@ -54,9 +57,39 @@ def debug_print(log, verbose):
         print(log)
 
 
-def stanford_ie(filename, verbose=True):
-    command = '{} -mx1g -cp "stanford-openie.jar:stanford-openie-models.jar:lib/*" ' \
-              'edu.stanford.nlp.naturalli.OpenIE {} -format ollie > out.txt'.format(JAVA_BIN_PATH, filename)
+def process_entity_relations(entity_relations_str, verbose=True):
+    # format is ollie.
+    entity_relations = list()
+    for s in entity_relations_str:
+        entity_relations.append(s[s.find("(") + 1:s.find(")")].split(';'))
+    return entity_relations
+
+
+def generate_graphviz_graph(entity_relations, verbose=True):
+    """digraph G {
+    # a -> b [ label="a to b" ];
+    # b -> c [ label="another label"];
+    }"""
+    graph = list()
+    graph.append('digraph {')
+    for er in entity_relations:
+        graph.append('"{}" -> "{}" [ label="{}" ];'.format(er[0], er[2], er[1]))
+    graph.append('}')
+
+    with open('out.dot', 'w') as output_file:
+        output_file.writelines(graph)
+
+    command = '{} -Tpng out.dot -o out.png'.format(DOT_BIN_PATH)
+    debug_print('Executing command = {}'.format(command), verbose)
+    dot_process = Popen(command, stdout=stderr, shell=True)
+    dot_process.wait()
+    assert not dot_process.returncode, 'ERROR: Call to dot exited with a non-zero code status.'
+
+
+def stanford_ie(filename, verbose=True, generate_graphviz=False):
+    out = 'out.txt'
+    command = '{} -mx4g -cp "stanford-openie.jar:stanford-openie-models.jar:lib/*" ' \
+              'edu.stanford.nlp.naturalli.OpenIE {} -format ollie > {}'.format(JAVA_BIN_PATH, filename, out)
     if verbose:
         debug_print('Executing command = {}'.format(command), verbose)
         java_process = Popen(command, stdout=stderr, shell=True)
@@ -65,21 +98,33 @@ def stanford_ie(filename, verbose=True):
     java_process.wait()
     assert not java_process.returncode, 'ERROR: Call to stanford_ie exited with a non-zero code status.'
 
-    with open('out.txt', 'r') as output_file:
-        return output_file.readlines()
+    with open(out, 'r') as output_file:
+        results_str = output_file.readlines()
+    os.remove(out)
+
+    results = process_entity_relations(results_str, verbose)
+    if generate_graphviz:
+        generate_graphviz_graph(results, verbose)
+
+    pickle.dump(results, open('out.pkl', 'w'))
+    debug_print('wrote to out.pkl', verbose)
+    return results_str
 
 
 def main(args):
     arg_p = arg_parse().parse_args(args[1:])
     filename = arg_p.filename
     verbose = arg_p.verbose
+    generate_graphviz = arg_p.generate_graph
+    print(arg_p)
     if filename is None:
         print('please provide a text file containing your input. Program will exit.')
         exit(1)
     if verbose:
         debug_print('filename = {}'.format(filename), verbose)
-    entities_relations = stanford_ie(filename, verbose)
-    print(entities_relations)
+    entities_relations = stanford_ie(filename, verbose, generate_graphviz)
+    for elt in entities_relations:
+        print(elt.strip())
 
 
 if __name__ == '__main__':
