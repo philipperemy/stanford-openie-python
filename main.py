@@ -87,10 +87,17 @@ def generate_graphviz_graph(entity_relations, verbose=True):
     assert not dot_process.returncode, 'ERROR: Call to dot exited with a non-zero code status.'
 
 
-def stanford_ie(filename, verbose=True, generate_graphviz=False):
+def stanford_ie(filename, verbose=True, generate_graphviz=False, absolute_path=None):
     out = 'out.txt'
-    command = 'cd {}; {} -mx4g -cp "stanford-openie.jar:stanford-openie-models.jar:lib/*" ' \
-              'edu.stanford.nlp.naturalli.OpenIE ../{} -format ollie > ../{}'. \
+
+    command = ''
+    if absolute_path is not None:
+        command = 'cd {};'.format(absolute_path)
+    else:
+        filename = '../{}'.format(filename)
+
+    command += 'cd {}; {} -mx4g -cp "stanford-openie.jar:stanford-openie-models.jar:lib/*" ' \
+               'edu.stanford.nlp.naturalli.OpenIE {} -format ollie > ../{}'. \
         format(STANFORD_IE_FOLDER, JAVA_BIN_PATH, filename, out)
     if verbose:
         debug_print('Executing command = {}'.format(command), verbose)
@@ -99,6 +106,9 @@ def stanford_ie(filename, verbose=True, generate_graphviz=False):
         java_process = Popen(command, stdout=stderr, stderr=open(os.devnull, 'w'), shell=True)
     java_process.wait()
     assert not java_process.returncode, 'ERROR: Call to stanford_ie exited with a non-zero code status.'
+
+    if absolute_path is not None:
+        out = absolute_path + out
 
     with open(out, 'r') as output_file:
         results_str = output_file.readlines()
