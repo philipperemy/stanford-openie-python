@@ -118,9 +118,10 @@ def stanford_ie(filename, verbose=True, generate_graphviz=False, absolute_path=N
     if generate_graphviz:
         generate_graphviz_graph(results, verbose)
 
-    pickle.dump(results, open('out.pkl', 'w'))
+    if verbose:
+        pickle.dump(results, open('out.pkl', 'w'))
     debug_print('wrote to out.pkl', verbose)
-    return results_str
+    return results
 
 
 def main(args):
@@ -135,9 +136,7 @@ def main(args):
     if verbose:
         debug_print('filename = {}'.format(filename), verbose)
     entities_relations = stanford_ie(filename, verbose, generate_graphviz)
-    for elt in entities_relations:
-        print(elt.strip())
-
+    print(entities_relations)
 
 if __name__ == '__main__':
     exit(main(argv))
