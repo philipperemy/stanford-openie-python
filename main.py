@@ -42,6 +42,7 @@ from sys import stderr
 IS_WINDOWS = True if system() == 'Windows' else False
 JAVA_BIN_PATH = 'java.exe' if IS_WINDOWS else 'java'
 DOT_BIN_PATH = 'dot.exe' if IS_WINDOWS else 'dot'
+STANFORD_IE_FOLDER = 'stanford-openie'
 
 
 def arg_parse():
@@ -88,8 +89,9 @@ def generate_graphviz_graph(entity_relations, verbose=True):
 
 def stanford_ie(filename, verbose=True, generate_graphviz=False):
     out = 'out.txt'
-    command = '{} -mx4g -cp "stanford-openie.jar:stanford-openie-models.jar:lib/*" ' \
-              'edu.stanford.nlp.naturalli.OpenIE {} -format ollie > {}'.format(JAVA_BIN_PATH, filename, out)
+    command = 'cd {}; {} -mx4g -cp "stanford-openie.jar:stanford-openie-models.jar:lib/*" ' \
+              'edu.stanford.nlp.naturalli.OpenIE ../{} -format ollie > ../{}'. \
+        format(STANFORD_IE_FOLDER, JAVA_BIN_PATH, filename, out)
     if verbose:
         debug_print('Executing command = {}'.format(command), verbose)
         java_process = Popen(command, stdout=stderr, shell=True)
