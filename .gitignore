@@ -92,3 +92,4 @@ ENV/
 *.txt
 .idea/
 *.pkl
+.DS_Store

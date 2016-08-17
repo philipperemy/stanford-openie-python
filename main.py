@@ -87,18 +87,21 @@ def generate_graphviz_graph(entity_relations, verbose=True):
     assert not dot_process.returncode, 'ERROR: Call to dot exited with a non-zero code status.'
 
 
-def stanford_ie(filename, verbose=True, generate_graphviz=False, absolute_path=None):
+def stanford_ie(input_filename, verbose=True, generate_graphviz=False, absolute_path=None):
     out = 'out.txt'
-
     command = ''
+
     if absolute_path is not None:
         command = 'cd {};'.format(absolute_path)
-    else:
-        filename = '../{}'.format(filename)
+
+    new_filename = ''
+    for filename in input_filename.split(','):
+        new_filename += '../{} '.format(filename)
 
     command += 'cd {}; {} -mx4g -cp "stanford-openie.jar:stanford-openie-models.jar:lib/*" ' \
                'edu.stanford.nlp.naturalli.OpenIE {} -format ollie > ../{}'. \
-        format(STANFORD_IE_FOLDER, JAVA_BIN_PATH, filename, out)
+        format(STANFORD_IE_FOLDER, JAVA_BIN_PATH, new_filename, out)
+
     if verbose:
         debug_print('Executing command = {}'.format(command), verbose)
         java_process = Popen(command, stdout=stderr, shell=True)
@@ -137,6 +140,7 @@ def main(args):
         debug_print('filename = {}'.format(filename), verbose)
     entities_relations = stanford_ie(filename, verbose, generate_graphviz)
     print(entities_relations)
+
 
 if __name__ == '__main__':
     exit(main(argv))
