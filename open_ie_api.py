@@ -11,12 +11,12 @@ if not os.path.exists(tmp_folder):
 absolute_path = os.path.dirname(os.path.realpath(__file__)) + '/'
 
 
-def texts_to_files(texts):
+def texts_to_files(texts, prefix_tmp_filename=''):
     full_tmp_file_names = []
     count = 0
     for text in texts:
         tmp_filename = str(count) + '.txt'
-        full_tmp_filename = '{}/{}'.format(tmp_folder, tmp_filename).replace('//', '/')
+        full_tmp_filename = '{}/{}'.format(prefix_tmp_filename + tmp_folder, tmp_filename).replace('//', '/')
         with open(full_tmp_filename, 'w') as f:
             f.write(text)
         full_tmp_file_names.append(full_tmp_filename)
@@ -24,11 +24,11 @@ def texts_to_files(texts):
     return full_tmp_file_names
 
 
-def call_api_many(texts, pagination_parameter=10000, verbose=False):
+def call_api_many(texts, pagination_parameter=10000, verbose=False, prefix_tmp_filename=''):
     reduced_results = []
     paginated_texts_list = [texts[i:i + pagination_parameter] for i in range(0, len(texts), pagination_parameter)]
     for paginated_texts in paginated_texts_list:
-        tmp_file_names = texts_to_files(paginated_texts)
+        tmp_file_names = texts_to_files(paginated_texts, prefix_tmp_filename)
         joint_filename = ','.join(tmp_file_names)
         results = stanford_ie(joint_filename, verbose=verbose, absolute_path=absolute_path)
         reduced_results.extend(results)
