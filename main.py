@@ -7,7 +7,8 @@ Note: The script does some minimal sanity checking of the input, but don't
     expect it to cover all cases. After all, it is a just a wrapper.
 Example:
     > echo "Barack Obama was born in Hawaii." > text.txt
-    > python python main.py -f text.txt
+    > python main.py -f text.txt
+    > python main.py -f text.txt,text2.txt (for batch mode).
     Should display
     1.000: (Barack Obama; was; born)
     1.000: (Barack Obama; was born in; Hawaii)
@@ -32,17 +33,18 @@ Version:    2016-07-08
 from __future__ import print_function
 
 import os
-import pickle
 from argparse import ArgumentParser
-from platform import system
 from subprocess import Popen
 from sys import argv
 from sys import stderr
 
-IS_WINDOWS = True if system() == 'Windows' else False
-JAVA_BIN_PATH = 'java.exe' if IS_WINDOWS else 'java'
-DOT_BIN_PATH = 'dot.exe' if IS_WINDOWS else 'dot'
+JAVA_BIN_PATH = 'java'
+DOT_BIN_PATH = 'dot'
 STANFORD_IE_FOLDER = 'stanford-openie'
+
+tmp_folder = '/tmp/openie/'
+if not os.path.exists(tmp_folder):
+    os.makedirs(tmp_folder)
 
 
 def arg_parse():
@@ -77,29 +79,34 @@ def generate_graphviz_graph(entity_relations, verbose=True):
         graph.append('"{}" -> "{}" [ label="{}" ];'.format(er[0], er[2], er[1]))
     graph.append('}')
 
-    with open('out.dot', 'w') as output_file:
+    out_dot = tmp_folder + 'out.dot'
+    with open(out_dot, 'w') as output_file:
         output_file.writelines(graph)
 
-    command = '{} -Tpng out.dot -o out.png'.format(DOT_BIN_PATH)
+    out_png = tmp_folder + 'out.png'
+    command = '{} -Tpng {} -o {}'.format(DOT_BIN_PATH, out_dot, out_png)
     debug_print('Executing command = {}'.format(command), verbose)
     dot_process = Popen(command, stdout=stderr, shell=True)
     dot_process.wait()
     assert not dot_process.returncode, 'ERROR: Call to dot exited with a non-zero code status.'
+    print('Wrote graph to {} and {}'.format(out_dot, out_png))
 
 
-def stanford_ie(input_filename, verbose=True, generate_graphviz=False, absolute_path=None):
-    out = 'out.txt'
-    command = ''
-
-    if absolute_path is not None:
-        command = 'cd {};'.format(absolute_path)
+def stanford_ie(input_filename, verbose=True, generate_graphviz=False):
+    out = tmp_folder + 'out.txt'
+    input_filename = input_filename.replace(',', ' ')
 
     new_filename = ''
-    for filename in input_filename.split(','):
-        new_filename += '../{} '.format(filename)
+    for filename in input_filename.split():
+        if filename.startswith('/'):  # absolute path.
+            new_filename += '{} '.format(filename)
+        else:
+            new_filename += '../{} '.format(filename)
 
+    absolute_path_to_script = os.path.dirname(os.path.realpath(__file__)) + '/'
+    command = 'cd {};'.format(absolute_path_to_script)
     command += 'cd {}; {} -mx4g -cp "stanford-openie.jar:stanford-openie-models.jar:lib/*" ' \
-               'edu.stanford.nlp.naturalli.OpenIE {} -format ollie > ../{}'. \
+               'edu.stanford.nlp.naturalli.OpenIE {} -format ollie > {}'. \
         format(STANFORD_IE_FOLDER, JAVA_BIN_PATH, new_filename, out)
 
     if verbose:
@@ -110,9 +117,6 @@ def stanford_ie(input_filename, verbose=True, generate_graphviz=False, absolute_
     java_process.wait()
     assert not java_process.returncode, 'ERROR: Call to stanford_ie exited with a non-zero code status.'
 
-    if absolute_path is not None:
-        out = absolute_path + out
-
     with open(out, 'r') as output_file:
         results_str = output_file.readlines()
     os.remove(out)
@@ -121,9 +125,6 @@ def stanford_ie(input_filename, verbose=True, generate_graphviz=False, absolute_
     if generate_graphviz:
         generate_graphviz_graph(results, verbose)
 
-    if verbose:
-        pickle.dump(results, open('out.pkl', 'w'))
-    debug_print('wrote to out.pkl', verbose)
     return results
 
 
