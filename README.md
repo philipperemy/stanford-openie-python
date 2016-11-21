@@ -16,6 +16,7 @@ More information can be found here : http://nlp.stanford.edu/software/openie.htm
 The code can be invoked either programmatically or through the command line. The program can be invoked with the following command. It will display ```['1.000: (Barack Obama; was; born)\n', '1.000: (Barack Obama; was born in; Hawaii)\n']```
 ```
 git clone https://github.com/philipperemy/Stanford-OpenIE-Python.git
+cd Stanford-OpenIE-Python
 chmod +x init.sh
 ./init.sh # downloads necessary deps: stanford-openie.jar and stanford-openie-models.jar.
 echo "Barack Obama was born in Hawaii." > samples.txt
