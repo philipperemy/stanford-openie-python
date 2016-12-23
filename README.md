@@ -35,6 +35,18 @@ echo "Barack Obama was born in Hawaii." > samples.txt
 python main.py -f samples.txt
 ```
 
+## Generate Graph
+
+```
+echo "Barack Obama was born in Hawaii." > samples.txt
+python main.py -f samples.txt -g
+```
+Will generate a [GraphViz DOT](http://www.graphviz.org/) graph and its related PNG file in `/tmp/openie/`
+
+<div align="center">
+  <img src="img/out.png"><br><br>
+</div>
+
 ## Support
 
 You can either open an `Issue` or send me a e-mail to premy@reactive.co.jp. Any contributions are welcomed!
