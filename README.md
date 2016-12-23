@@ -11,14 +11,26 @@ The system first splits each sentence into a set of entailed clauses. Each claus
 
 More information can be found here : http://nlp.stanford.edu/software/openie.html
 
-## Usage 
+## Usage
 
-The code can be invoked either programmatically or through the command line. The program can be invoked with the following command. It will display ```['1.000: (Barack Obama; was; born)\n', '1.000: (Barack Obama; was born in; Hawaii)\n']```
+First of all, make sure Java 1.8 is installed. Open a terminal and run this command to check:
+
+```
+java -version
+```
+
+If this is not the case and if your OS is Ubuntu, you can install it this way:
+
+```
+sudo add-apt-repository ppa:webupd8team/java
+sudo apt-get update
+sudo apt-get install oracle-java8-installer
+```
+
+The code can be invoked either programmatically or through the command line. The program can be invoked with the following command. It will display ```[['Barack Obama', ' was', ' born'], ['Barack Obama', ' was born in', ' Hawaii']]```
 ```
 git clone https://github.com/philipperemy/Stanford-OpenIE-Python.git
 cd Stanford-OpenIE-Python
-chmod +x init.sh
-./init.sh # downloads necessary deps: stanford-openie.jar and stanford-openie-models.jar.
 echo "Barack Obama was born in Hawaii." > samples.txt
 python main.py -f samples.txt
 ```
