@@ -2,6 +2,10 @@
 
 The unofficial cross-platform Python wrapper for the <b>state-of-art</b> information extraction library from Stanford University.
 
+```
+NOTE: Windows is not currently supported! Works on UNIX systems like Linux and Mac OS.
+```
+
 ## About Stanford IE
 
 Open information extraction (open IE) refers to the extraction of structured relation triples from plain text, such that the schema for these relations does not need to be specified in advance. For example, Barack Obama was born in Hawaii would create a triple (Barack Obama; was born in; Hawaii), corresponding to the open domain relation "was born in". This software is a Java implementation of an open IE system as described in the paper:
