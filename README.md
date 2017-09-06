@@ -55,5 +55,5 @@ Note: Make sure GraphViz is installed beforehand. Try to run the `dot` command t
 
 ## Support
 
-You can either open an `Issue` or send me a e-mail to premy@reactive.co.jp. Any contributions are welcomed!
+You can either open an `Issue` or send me a e-mail to premy@cogent.co.jp. Any contributions are welcomed!
 
