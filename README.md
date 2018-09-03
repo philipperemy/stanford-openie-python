@@ -39,6 +39,21 @@ echo "Barack Obama was born in Hawaii." > samples.txt
 python main.py -f samples.txt
 ```
 
+The output should be something like:
+
+```
+Barack Obama | was | born
+Barack Obama | was born in | Hawaii
+```
+
+### Large Corpus
+
+Sometimes you just want to run the information extraction tool on something larger than just a couple of sentences. I provide a bash script for that. This example runs the tool on the book: [The Iliad by Homer](http://www.gutenberg.org/ebooks/6130?msg=welcome_stranger), composed of 1.2M characters and 26K lines.
+
+```
+./process_large_corpus.sh corpus/pg6130.txt corpus/pg6130.txt.out
+```
+
 ## Generate Graph
 
 ```
