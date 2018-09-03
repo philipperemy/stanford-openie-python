@@ -140,7 +140,8 @@ def main(args):
     if verbose:
         debug_print('filename = {}'.format(filename), verbose)
     entities_relations = stanford_ie(filename, verbose, generate_graphviz)
-    print(entities_relations)
+
+    print('\n'.join([' |'.join(a) for a in entities_relations]))
 
 
 if __name__ == '__main__':
