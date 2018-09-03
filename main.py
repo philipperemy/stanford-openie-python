@@ -133,7 +133,7 @@ def main(args):
     filename = arg_p.filename
     verbose = arg_p.verbose
     generate_graphviz = arg_p.generate_graph
-    print(arg_p)
+    # print(arg_p)
     if filename is None:
         print('please provide a text file containing your input. Program will exit.')
         exit(1)
