@@ -54,6 +54,11 @@ Sometimes you just want to run the information extraction tool on something larg
 ./process_large_corpus.sh corpus/pg6130.txt corpus/pg6130.txt.out
 ```
 
+```
+wc -l corpus/pg6130.txt.out
+> 23888
+```
+
 ## Generate Graph
 
 ```
