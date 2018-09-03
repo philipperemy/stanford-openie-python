@@ -15,7 +15,11 @@ TMP_DIR=/tmp/openie/large_corpus
 rm -rf $TMP_DIR
 mkdir -p $TMP_DIR
 
-gsplit -b 10k --numeric-suffixes $1 ${TMP_DIR}/small_
+if [ "$(uname)" == "Darwin" ]; then
+    gsplit -b 10k --numeric-suffixes $1 ${TMP_DIR}/small_
+else
+    split -b 10k --numeric-suffixes $1 ${TMP_DIR}/small_
+fi
 
 num_files=$(find ${TMP_DIR}/small_* -type f | wc -l)
 var=1
