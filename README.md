@@ -19,20 +19,20 @@ More information can be found here : http://nlp.stanford.edu/software/openie.htm
 
 First of all, make sure Java 1.8 is installed. Open a terminal and run this command to check:
 
-```
+```bash
 java -version
 ```
 
 If this is not the case and if your OS is Ubuntu, you can install it this way:
 
-```
+```bash
 sudo add-apt-repository ppa:webupd8team/java
 sudo apt-get update
 sudo apt-get install oracle-java8-installer
 ```
 
 The code can be invoked either programmatically or through the command line. The program can be invoked with the following command. It will display ```[['Barack Obama', ' was', ' born'], ['Barack Obama', ' was born in', ' Hawaii']]```
-```
+```bash
 git clone https://github.com/philipperemy/Stanford-OpenIE-Python.git
 cd Stanford-OpenIE-Python
 echo "Barack Obama was born in Hawaii." > samples.txt
@@ -50,7 +50,7 @@ Barack Obama | was born in | Hawaii
 
 Sometimes you just want to run the information extraction tool on something larger than just a couple of sentences. I provide a bash script for that. This example runs the tool on the book: [The Iliad by Homer](http://www.gutenberg.org/ebooks/6130?msg=welcome_stranger), composed of 1.2M characters and 26K lines.
 
-```
+```bash
 ./process_large_corpus.sh corpus/pg6130.txt corpus/pg6130.txt.out
 ```
 
@@ -61,7 +61,7 @@ wc -l corpus/pg6130.txt.out
 
 ## Generate Graph
 
-```
+```bash
 echo "Barack Obama was born in Hawaii." > samples.txt
 python main.py -f samples.txt -g
 ```
