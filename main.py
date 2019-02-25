@@ -46,6 +46,10 @@ tmp_folder = '/tmp/openie/'
 if not os.path.exists(tmp_folder):
     os.makedirs(tmp_folder)
 
+img_folder = 'img/'
+if not os.path.exists(img_folder):
+    os.makedirs(img_folder)
+
 
 def arg_parse():
     arg_p = ArgumentParser('Stanford IE Python Wrapper')
@@ -83,7 +87,7 @@ def generate_graphviz_graph(entity_relations, verbose=True):
     with open(out_dot, 'w') as output_file:
         output_file.writelines(graph)
 
-    out_png = tmp_folder + 'out.png'
+    out_png = img_folder + 'out.png'
     command = '{} -Tpng {} -o {}'.format(DOT_BIN_PATH, out_dot, out_png)
     debug_print('Executing command = {}'.format(command), verbose)
     dot_process = Popen(command, stdout=stderr, shell=True)
