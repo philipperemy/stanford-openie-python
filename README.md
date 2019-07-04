@@ -46,6 +46,18 @@ Barack Obama | was | born
 Barack Obama | was born in | Hawaii
 ```
 
+### Troubleshooting
+
+It's possible that you get an error like that one when using the lib for the first time:
+
+```
+AssertionError: ERROR: Call to stanford_ie exited with a non-zero code status
+```
+
+The error is related to the interaction with Java. To troubleshoot it, I would advise to run the python script with the `--verbose` argument.
+
+Then, in the logs, look for the line `executing command = <whatever command>` and copy paste this `<whatever command>` in your terminal to see the error.
+
 ### Large Corpus
 
 Sometimes you just want to run the information extraction tool on something larger than just a couple of sentences. I provide a bash script for that. This example runs the tool on the book: [The Iliad by Homer](http://www.gutenberg.org/ebooks/6130?msg=welcome_stranger), composed of 1.2M characters and 26K lines.
