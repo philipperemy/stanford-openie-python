@@ -54,9 +54,7 @@ It's possible that you get an error like that one when using the lib for the fir
 AssertionError: ERROR: Call to stanford_ie exited with a non-zero code status
 ```
 
-The error is related to the interaction with Java. To troubleshoot it, I would advise to run the python script with the `--verbose` argument.
-
-Then, in the logs, look for the line `executing command = <whatever command>` and copy paste this `<whatever command>` in your terminal to see the error.
+The error is related to the interaction with Java. To troubleshoot it, I would advise to run the python script with the `--verbose` argument. Search for line `executing command = <whatever command>` in the logs and copy paste this `<whatever command>` in your terminal to see the error.
 
 ### Large Corpus
 
