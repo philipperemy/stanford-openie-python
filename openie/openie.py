@@ -28,10 +28,13 @@ class StanfordOpenIE:
         for triple in o['sentences'][0]['openie']:
             print(triple['subject'], '|', triple['relation'], '|', triple['object'])
 
+    def __enter__(self):
+        return self
+
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        pass
+
     def __del__(self):
         self.client.stop()
         del os.environ['CORENLP_HOME']
 
-#########################################
-# Run this when you want to run OpenIE. #
-#########################################
