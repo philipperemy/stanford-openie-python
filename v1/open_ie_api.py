@@ -2,7 +2,7 @@ from __future__ import print_function
 
 import os
 
-from main import stanford_ie
+from v1.main import stanford_ie
 
 tmp_folder = '/tmp/openie/'
 if not os.path.exists(tmp_folder):
