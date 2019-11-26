@@ -1,5 +1,7 @@
 import os
 from pathlib import Path
+from subprocess import Popen
+from sys import stderr
 from zipfile import ZipFile
 
 import wget
@@ -28,6 +30,29 @@ class StanfordOpenIE:
         for triple in o['sentences'][0]['openie']:
             print(triple['subject'], '|', triple['relation'], '|', triple['object'])
 
+    def generate_graphviz_graph(self, text, out='.'):
+        entity_relations = self.client.annotate(text=text, annotators=['openie'], output_format='ollie')
+        """digraph G {
+        # a -> b [ label="a to b" ];
+        # b -> c [ label="another label"];
+        }"""
+        graph = list()
+        graph.append('digraph {')
+        for er in entity_relations:
+            graph.append('"{}" -> "{}" [ label="{}" ];'.format(er[0], er[2], er[1]))
+        graph.append('}')
+
+        out_dot = out + 'out.dot'
+        with open(out_dot, 'w') as output_file:
+            output_file.writelines(graph)
+
+        out_png = out + 'out.png'
+        command = 'dot -Tpng {} -o {}'.format(out_dot, out_png)
+        dot_process = Popen(command, stdout=stderr, shell=True)
+        dot_process.wait()
+        assert not dot_process.returncode, 'ERROR: Call to dot exited with a non-zero code status.'
+        print('Wrote graph to {} and {}'.format(out_dot, out_png))
+
     def __enter__(self):
         return self
 
@@ -37,4 +62,3 @@ class StanfordOpenIE:
     def __del__(self):
         self.client.stop()
         del os.environ['CORENLP_HOME']
-
