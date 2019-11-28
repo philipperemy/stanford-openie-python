@@ -69,7 +69,7 @@ python main.py -f samples.txt -g
 Will generate a [GraphViz DOT](http://www.graphviz.org/) graph and its related PNG file in `/tmp/openie/`
 
 <div align="center">
-  <img src="img/out.png"><br><br>
+  <img src="../img/out.png"><br><br>
 </div>
 
 Note: Make sure GraphViz is installed beforehand. Try to run the `dot` command to see if this is the case. If not, run `sudo apt-get install graphviz` if you're running on Ubuntu.
