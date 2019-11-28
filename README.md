@@ -4,12 +4,10 @@ Open information extraction (open IE) refers to the extraction of structured rel
 
 More information can be found here : http://nlp.stanford.edu/software/openie.html
 
-## V2
+## Installation
+`pip install stanford_openie`
 
-```bash
-pip install stanford_openie
-```
-
+## Example
 ```python
 from openie import StanfordOpenIE
 
@@ -45,9 +43,16 @@ with StanfordOpenIE() as client:
  |- {'subject': 'Menapolus', 'relation': 'son of', 'object': 'Ithagenes'}
  |- {'subject': 'Menapolus', 'relation': 'was Among', 'object': 'immigrants'}
  ```
+ 
+It will generate a [GraphViz DOT](http://www.graphviz.org/) in `graph.png`:
+
+<div align="center">
+  <img src="img/out.png"><br><br>
+</div>
+
+Note: Make sure GraphViz is installed beforehand. Try to run the `dot` command to see if this is the case. If not, run `sudo apt-get install graphviz` if you're running on Ubuntu. 
 
 ## V1 (deprecated)
-
 
 The unofficial cross-platform Python wrapper for the <b>state-of-art</b> information extraction library from Stanford University.
 
