@@ -6,6 +6,10 @@ More information can be found here : http://nlp.stanford.edu/software/openie.htm
 
 ## V2
 
+```bash
+pip install stanford_openie
+```
+
 ```python
 from openie import StanfordOpenIE
 
@@ -27,6 +31,19 @@ with StanfordOpenIE() as client:
     print('Found %s triples in the corpus.' % len(triples_corpus))
     for triple in triples_corpus[:3]:
         print('|-', triple)
+ ```
+ 
+ *Expected output*
+ ```
+ |- {'subject': 'Barack Obama', 'relation': 'was', 'object': 'born'}
+ |- {'subject': 'Barack Obama', 'relation': 'was born in', 'object': 'Hawaii'}
+ |- {'subject': 'Richard Manning', 'relation': 'wrote', 'object': 'sentence'}
+ Graph generated: graph.png.
+ Corpus: ﻿According to this document, the city of Cumae in Ćolia, was, at an early period [...].
+ Found 1664 triples in the corpus.
+ |- {'subject': 'city', 'relation': 'is in', 'object': 'Ćolia'}
+ |- {'subject': 'Menapolus', 'relation': 'son of', 'object': 'Ithagenes'}
+ |- {'subject': 'Menapolus', 'relation': 'was Among', 'object': 'immigrants'}
  ```
 
 ## V1 (deprecated)
