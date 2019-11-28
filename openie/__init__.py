@@ -1,0 +1,1 @@
+from openie.openie import StanfordOpenIE
