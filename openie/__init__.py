@@ -1,1 +1,1 @@
-from openie.openie import StanfordOpenIE
+from openie.openie import StanfordOpenIE  # noqa
