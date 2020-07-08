@@ -56,3 +56,8 @@ Note: Make sure GraphViz is installed beforehand. Try to run the `dot` command t
 ## V1
 
 Still available here [v1](v1).
+
+## References
+
+- https://www.kaggle.com/asitang/stanford-resources
+- https://www.kaggle.com/geofila/corenlp?select=stanford-corenlp-full-2018-10-05

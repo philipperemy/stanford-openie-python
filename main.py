@@ -10,11 +10,12 @@ with StanfordOpenIE() as client:
     client.generate_graphviz_graph(text, graph_image)
     print('Graph generated: %s.' % graph_image)
 
-    with open('corpus/pg6130.txt', 'r', encoding='utf8') as r:
+    with open('corpus/pg6130.txt', encoding='utf8') as r:
         corpus = r.read().replace('\n', ' ').replace('\r', '')
 
-    triples_corpus = client.annotate(corpus[0:50000])
+    triples_corpus = client.annotate(corpus[0:5000])
     print('Corpus: %s [...].' % corpus[0:80])
     print('Found %s triples in the corpus.' % len(triples_corpus))
     for triple in triples_corpus[:3]:
         print('|-', triple)
+    print('[...]')
