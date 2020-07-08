@@ -11,18 +11,26 @@ import wget
 class StanfordOpenIE:
 
     def __init__(self, core_nlp_version: str = '2018-10-05'):
-        self.remote_url = 'https://nlp.stanford.edu/software/stanford-corenlp-full-{}.zip'.format(core_nlp_version)
         self.install_dir = Path('~/.stanfordnlp_resources/').expanduser()
         self.install_dir.mkdir(exist_ok=True)
-        if not (self.install_dir / Path('stanford-corenlp-full-{}'.format(core_nlp_version))).exists():
-            print('Downloading from %s.' % self.remote_url)
-            output_filename = wget.download(self.remote_url, out=str(self.install_dir))
-            print('\nExtracting to %s.' % self.install_dir)
+        if len([d for d in self.install_dir.glob('*') if d.is_dir()]) == 0:
+            # No coreNLP directories. Let's check for ZIP archives as well.
+            zip_files = [d for d in self.install_dir.glob('*') if d.suffix == '.zip']
+            if len(zip_files) == 0:
+                # No dir and no ZIP. Let's download it with the desired core_nlp_version.
+                remote_url = 'https://nlp.stanford.edu/software/stanford-corenlp-full-{}.zip'.format(core_nlp_version)
+                print('Downloading from %s.' % remote_url)
+                output_filename = wget.download(remote_url, out=str(self.install_dir))
+                print('\nExtracting to %s.' % self.install_dir)
+            else:
+                output_filename = zip_files[0]
+            print('Unzip %s.' % output_filename)
             zf = ZipFile(output_filename)
             zf.extractall(path=self.install_dir)
             zf.close()
+        target_dir = [d for d in self.install_dir.glob('*') if d.is_dir()][0]
 
-        os.environ['CORENLP_HOME'] = str(self.install_dir / 'stanford-corenlp-full-2018-10-05')
+        os.environ['CORENLP_HOME'] = str(self.install_dir / target_dir)
         from stanfordnlp.server import CoreNLPClient
         self.client = CoreNLPClient(annotators=['openie'], memory='8G')
 
