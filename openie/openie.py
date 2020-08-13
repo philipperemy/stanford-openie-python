@@ -10,7 +10,7 @@ import wget
 
 class StanfordOpenIE:
 
-    def __init__(self, core_nlp_version: str = '2018-10-05'):
+    def __init__(self, core_nlp_version: str = '4.1.0'):
         self.install_dir = Path('~/.stanfordnlp_resources/').expanduser()
         self.install_dir.mkdir(exist_ok=True)
         if len([d for d in self.install_dir.glob('*') if d.is_dir()]) == 0:
@@ -18,7 +18,7 @@ class StanfordOpenIE:
             zip_files = [d for d in self.install_dir.glob('*') if d.suffix == '.zip']
             if len(zip_files) == 0:
                 # No dir and no ZIP. Let's download it with the desired core_nlp_version.
-                remote_url = 'https://nlp.stanford.edu/software/stanford-corenlp-full-{}.zip'.format(core_nlp_version)
+                remote_url = 'https://nlp.stanford.edu/software/stanford-corenlp-{}.zip'.format(core_nlp_version)
                 print('Downloading from %s.' % remote_url)
                 output_filename = wget.download(remote_url, out=str(self.install_dir))
                 print('\nExtracting to %s.' % self.install_dir)
