@@ -5,7 +5,10 @@ Open information extraction (open IE) refers to the extraction of structured rel
 
 More information can be found here : http://nlp.stanford.edu/software/openie.html
 
+The OpenIE library is only available in english: https://stanfordnlp.github.io/CoreNLP/human-languages.html
+
 ## Installation
+
 `pip install stanford_openie`
 
 ## Example
