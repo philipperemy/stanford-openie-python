@@ -64,3 +64,16 @@ Still available here [v1](v1).
 
 - https://www.kaggle.com/asitang/stanford-resources
 - https://www.kaggle.com/geofila/corenlp?select=stanford-corenlp-full-2018-10-05
+
+## Cite
+
+```
+@misc{StanfordOpenIEWrapper,
+  author = {Philippe Remy},
+  title = {Python wrapper for Stanford OpenIE},
+  year = {2020},
+  publisher = {GitHub},
+  journal = {GitHub repository},
+  howpublished = {\url{https://github.com/philipperemy/Stanford-OpenIE-Python}},
+}
+```
