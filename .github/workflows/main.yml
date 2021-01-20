@@ -19,7 +19,8 @@ jobs:
           python-version: ${{ matrix.python-version }}
       - name: Install dependencies
         run: |
-          pip install pip==19.3
+          # pip install pip==19.3
+          python -m pip install pip==20.2.4
           sudo apt-get install graphviz
           pip install flake8 tox
       - name: Lint with flake8
