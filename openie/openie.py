@@ -10,8 +10,11 @@ import wget
 
 class StanfordOpenIE:
 
-    def __init__(self, core_nlp_version: str = '4.1.0'):
-        self.install_dir = Path('~/.stanfordnlp_resources/').expanduser()
+    def __init__(self, core_nlp_version: str = '4.1.0', install_dir_path: str = None):
+        if install_dir_path is None:
+            self.install_dir = Path('~/.stanfordnlp_resources/').expanduser()
+        else:
+            self.install_dir = Path(install_dir_path)
         self.install_dir.mkdir(exist_ok=True)
         if len([d for d in self.install_dir.glob('*') if d.is_dir()]) == 0:
             # No coreNLP directories. Let's check for ZIP archives as well.
