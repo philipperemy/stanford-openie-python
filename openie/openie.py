@@ -97,5 +97,6 @@ class StanfordOpenIE:
         pass
 
     def __del__(self):
-        self.client.stop()
+        if hasattr(self, 'client'):
+            self.client.stop()
         del os.environ['CORENLP_HOME']
