@@ -11,7 +11,7 @@ The OpenIE library is only available in english: https://stanfordnlp.github.io/C
 
 ```bash
 pip install stanford_openie
-``
+```
 
 ## Example
 
