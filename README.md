@@ -9,6 +9,8 @@ The OpenIE library is only available in english: https://stanfordnlp.github.io/C
 
 ## Installation
 
+You need python3 and Java installed. Java is used by the CoreNLP library.
+
 ```bash
 pip install stanford_openie
 ```
