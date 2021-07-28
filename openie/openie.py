@@ -10,7 +10,12 @@ import wget
 
 class StanfordOpenIE:
 
-    def __init__(self, core_nlp_version: str = '4.1.0', install_dir_path: str = None):
+    def __init__(
+            self,
+            core_nlp_version: str = '4.1.0',
+            install_dir_path: str = None,
+            *args, **kwargs
+    ):
         if install_dir_path is None:
             self.install_dir = Path('~/.stanfordnlp_resources/').expanduser()
         else:
@@ -35,7 +40,7 @@ class StanfordOpenIE:
 
         os.environ['CORENLP_HOME'] = str(self.install_dir / target_dir)
         from stanfordnlp.server import CoreNLPClient
-        self.client = CoreNLPClient(annotators=['openie'], memory='8G')
+        self.client = CoreNLPClient(annotators=['openie'], memory='8G', *args, **kwargs)
 
     def annotate(self, text: str, properties_key: str = None, properties: dict = None, simple_format: bool = True):
         """
