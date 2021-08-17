@@ -17,7 +17,8 @@ class StanfordOpenIE:
             *args, **kwargs
     ):
         if install_dir_path is None:
-            self.install_dir = Path('~/.stanfordnlp_resources/').expanduser()
+            default_path = Path('~/.stanfordnlp_resources/').expanduser()
+            self.install_dir = os.environ.get("OPENIE_INSTALL_PATH", default_path)
         else:
             self.install_dir = Path(install_dir_path)
         self.install_dir.mkdir(exist_ok=True)
