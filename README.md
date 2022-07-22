@@ -89,3 +89,9 @@ Still available here [v1](v1).
   howpublished = {\url{https://github.com/philipperemy/Stanford-OpenIE-Python}},
 }
 ```
+
+## Contributors
+
+<a href="https://github.com/philipperemy/stanford-openie-python/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=philipperemy/stanford-openie-python" />
+</a>
