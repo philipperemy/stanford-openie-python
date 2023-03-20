@@ -1,11 +1,18 @@
 # Python3 wrapper for Stanford OpenIE
+
+[![Downloads](https://static.pepy.tech/badge/stanford-openie)](https://pepy.tech/project/stanford-openie)
+[![Downloads](https://static.pepy.tech/badge/stanford-openie/month)](https://pepy.tech/project/stanford-openie)
 ![Stanford NLP Wrapper CI](https://github.com/philipperemy/Stanford-OpenIE-Python/workflows/Stanford%20NLP%20Wrapper%20CI/badge.svg)
 
 *Supports the latest CoreNLP library 4.5.3 (2023-03-10).*
 
-Open information extraction (open IE) refers to the extraction of structured relation triples from plain text, such that the schema for these relations does not need to be specified in advance. For example, Barack Obama was born in Hawaii would create a triple `(Barack Obama; was born in; Hawaii)`, corresponding to the open domain relation "was born in". CoreNLP is a Java implementation of an open IE system as described in the paper:
+Open information extraction (open IE) refers to the extraction of structured relation triples from plain text, such that
+the schema for these relations does not need to be specified in advance. For example, Barack Obama was born in Hawaii
+would create a triple `(Barack Obama; was born in; Hawaii)`, corresponding to the open domain relation "was born in".
+CoreNLP is a Java implementation of an open IE system as described in the paper:
 
-More information can be found [here](http://nlp.stanford.edu/software/openie.html).  The OpenIE library is only available in [english](https://stanfordnlp.github.io/CoreNLP/human-languages.html). 
+More information can be found [here](http://nlp.stanford.edu/software/openie.html). The OpenIE library is only available
+in [english](https://stanfordnlp.github.io/CoreNLP/human-languages.html).
 
 ## Installation
 
@@ -46,8 +53,9 @@ with StanfordOpenIE(properties=properties) as client:
         print('|-', triple)
     print('[...]')
  ```
- 
- *Expected output*
+
+*Expected output*
+
  ```
  |- {'subject': 'Barack Obama', 'relation': 'was', 'object': 'born'}
  |- {'subject': 'Barack Obama', 'relation': 'was born in', 'object': 'Hawaii'}
@@ -59,14 +67,15 @@ with StanfordOpenIE(properties=properties) as client:
  |- {'subject': 'Menapolus', 'relation': 'son of', 'object': 'Ithagenes'}
  |- {'subject': 'Menapolus', 'relation': 'was Among', 'object': 'immigrants'}
  ```
- 
+
 It will generate a [GraphViz DOT](http://www.graphviz.org/) in `graph.png`:
 
 <div align="center">
   <img src="img/out.png"><br><br>
 </div>
 
-*Note*: Make sure GraphViz is installed beforehand. Try to run the `dot` command to see if this is the case. If not, run `sudo apt-get install graphviz` if you're running on Ubuntu. 
+*Note*: Make sure GraphViz is installed beforehand. Try to run the `dot` command to see if this is the case. If not,
+run `sudo apt-get install graphviz` if you're running on Ubuntu.
 
 ## References
 
