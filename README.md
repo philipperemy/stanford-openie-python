@@ -1,15 +1,15 @@
 # Python3 wrapper for Stanford OpenIE
 ![Stanford NLP Wrapper CI](https://github.com/philipperemy/Stanford-OpenIE-Python/workflows/Stanford%20NLP%20Wrapper%20CI/badge.svg)
 
+*Supports the latest CoreNLP library 4.5.3 (2023-03-10).*
+
 Open information extraction (open IE) refers to the extraction of structured relation triples from plain text, such that the schema for these relations does not need to be specified in advance. For example, Barack Obama was born in Hawaii would create a triple `(Barack Obama; was born in; Hawaii)`, corresponding to the open domain relation "was born in". CoreNLP is a Java implementation of an open IE system as described in the paper:
 
-More information can be found here : http://nlp.stanford.edu/software/openie.html
-
-The OpenIE library is only available in english: https://stanfordnlp.github.io/CoreNLP/human-languages.html
+More information can be found [here](http://nlp.stanford.edu/software/openie.html).  The OpenIE library is only available in [english](https://stanfordnlp.github.io/CoreNLP/human-languages.html). 
 
 ## Installation
 
-You need python3 and Java installed. Java is used by the CoreNLP library.
+You need python3 and Java (JRE) installed. Java is used by the CoreNLP library.
 
 ```bash
 pip install stanford_openie
@@ -67,10 +67,6 @@ It will generate a [GraphViz DOT](http://www.graphviz.org/) in `graph.png`:
 </div>
 
 *Note*: Make sure GraphViz is installed beforehand. Try to run the `dot` command to see if this is the case. If not, run `sudo apt-get install graphviz` if you're running on Ubuntu. 
-
-## V1
-
-Still available here [v1](v1).
 
 ## References
 
