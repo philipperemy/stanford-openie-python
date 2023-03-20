@@ -19,6 +19,7 @@ jobs:
         run: |
           sudo apt-get install graphviz
           pip install --upgrade pip
+          pip install tox
       - name: Test with tox
         run: |
           tox
