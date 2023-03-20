@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name='stanford-openie',
-    version='1.3.0',
+    version='1.3.1',
     description='Minimalist wrapper around Stanford OpenIE',
     author='Philippe Remy',
     license='MIT',
@@ -12,6 +12,8 @@ setup(
     install_requires=[
         'wget',
         'stanfordnlp',
-        'six'
+        'six',
+        'pydot',
+        'protobuf<=3.20'
     ]
 )

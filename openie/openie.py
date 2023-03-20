@@ -3,6 +3,7 @@ import tempfile
 from pathlib import Path
 from subprocess import Popen
 from sys import stderr
+from typing import Optional
 from zipfile import ZipFile
 
 import wget
@@ -12,12 +13,13 @@ class StanfordOpenIE:
 
     def __init__(
             self,
-            core_nlp_version: str = '4.1.0',
-            install_dir_path: str = None,
-            *args, **kwargs
+            core_nlp_version: str = '4.5.3',  # https://stanfordnlp.github.io/CoreNLP/history.html
+            install_dir_path: Optional[str] = None,
+            *args,
+            **kwargs
     ):
         if install_dir_path is None:
-            default_path = Path('~/.stanfordnlp_resources/').expanduser()
+            default_path = Path('~/.stanfordnlp_resources').expanduser()
             self.install_dir = os.environ.get("OPENIE_INSTALL_PATH", default_path)
         else:
             self.install_dir = Path(install_dir_path)
@@ -52,8 +54,10 @@ class StanfordOpenIE:
         :return: Depending on simple_format: full or simpler format of triples <subject, relation, object>.
         """
         # https://stanfordnlp.github.io/CoreNLP/openie.html
-        core_nlp_output = self.client.annotate(text=text, annotators=['openie'], output_format='json',
-                                               properties_key=properties_key, properties=properties)
+        core_nlp_output = self.client.annotate(
+            text=text, annotators=['openie'], output_format='json',
+            properties_key=properties_key, properties=properties
+        )
         if simple_format:
             triples = []
             for sentence in core_nlp_output['sentences']:
@@ -67,7 +71,11 @@ class StanfordOpenIE:
         else:
             return core_nlp_output
 
-    def generate_graphviz_graph(self, text: str, png_filename: str = './out/graph.png'):
+    def generate_graphviz_graph(
+            self,
+            text: str,
+            png_filename: str = './out/graph.png'
+    ):
         """
        :param (str | unicode) text: raw text for the CoreNLPServer to parse
        :param (list | string) png_filename: list of annotators to use
