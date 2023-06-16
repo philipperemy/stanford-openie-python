@@ -18,6 +18,12 @@ in [english](https://stanfordnlp.github.io/CoreNLP/human-languages.html).
 
 You need python3 and Java (JRE) installed. Java is used by the CoreNLP library.
 
+Make sure Java is installed first.
+```bash
+java -version
+```
+
+Then install the lib.
 ```bash
 pip install stanford_openie
 ```
