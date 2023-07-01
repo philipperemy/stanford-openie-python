@@ -1,4 +1,4 @@
-# Python wrapper for Stanford OpenIE
+# Python wrapper for Stanford OpenIE (MacOS/Linux)
 
 [![Downloads](https://static.pepy.tech/badge/stanford-openie)](https://pepy.tech/project/stanford-openie)
 [![Downloads](https://static.pepy.tech/badge/stanford-openie/month)](https://pepy.tech/project/stanford-openie)
