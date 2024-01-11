@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name='stanford-openie',
-    version='1.3.1',
+    version='1.3.2',
     description='Minimalist wrapper around Stanford OpenIE',
     author='Philippe Remy',
     license='MIT',
